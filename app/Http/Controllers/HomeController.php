@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Hostel;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\Room;
 use App\Models\User;
@@ -18,7 +20,6 @@ class HomeController extends Controller
     {
         $this->middleware('auth');
     }
-
     /**
      * Show the application dashboard.
      *
@@ -33,9 +34,39 @@ class HomeController extends Controller
         return view('home', compact('total_users', 'total_rooms'));
     }
 
+    public function add_user(){
+        return view('Admin.add-user');
+    }
+
+    public function create_user(Request $request){
+        $this->validate($request, [
+            'name' => 'required|max:155',
+            'email' => 'required',
+            'password' => 'required',
+            'contact' => 'required',
+            'role_id' => 'required',
+        ]);
+
+        $result = User::create([
+            'name' => $request->name,
+            'father_name' => $request->father_name,
+            'email' => $request->email,
+            'password' => Hash::make($request->new_password),
+            'contact' => $request->contact,
+            'gender' => $request->gender,
+            'address' => $request->address,
+        ]);
+        if ($result) {
+            return redirect()->back()->with('success', 'User Updated successfully');
+
+        } else {
+            return Redirect::back()->withErrors(['Something went wrong']);
+        }
+    }
+
     public function all_users()
     {
-        $users = User::all();
+        $users = User::orderBy('created_at', 'desc')->get();
         return view('Admin.all-users', compact('users'));
     }
     public function update_user(Request $request){
@@ -73,5 +104,24 @@ class HomeController extends Controller
                 return Redirect::back()->withErrors(['Something went wrong']);
             }
         }
+    }
+
+    public function assign_manger(Request $request){
+
+        $this->validate($request, [
+            'hostel_id' => 'required',
+            'user_id' => 'required',
+        ]);
+
+        $result = Hostel::where('id', $request->hostel_id)->update([
+            'user_id' => $request->user_id,
+        ]);
+        if ($result) {
+            return redirect()->back()->with('success', 'Manager Assigned to Hostel successfully');
+
+        } else {
+            return Redirect::back()->withErrors(['Something went wrong']);
+        }
+
     }
 }

@@ -9,6 +9,16 @@ use Redirect;
 class CourseController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -50,7 +60,7 @@ class CourseController extends Controller
      */
     public function all_courses()
     {
-        $courses = Course::all();
+        $courses = Course::orderBy('created_at', 'desc')->get();
         return view('Admin.all-courses', compact('courses'));
     }
 

@@ -18,7 +18,8 @@
                         <div class="col-lg-8 p-r-0 title-margin-right">
                             <div class="page-header">
                                 <div class="page-title">
-                                    <h1>Hello, <span class="text-uppercase">Welcome {{ auth()->user()->name }}</span></h1>
+                                    <h1>Hello, <span class="text-uppercase">Welcome {{ auth()->user()->name }}</span>
+                                    </h1>
                                 </div>
                             </div>
                         </div>
@@ -61,7 +62,8 @@
                                 <div class="card">
                                     <div class="bootstrap-data-table-panel">
                                         <div class="table-responsive">
-                                            <table id="bootstrap-data-table-export" class="table table-striped table-bordered">
+                                            <table id="bootstrap-data-table-export"
+                                                   class="table table-striped table-bordered">
                                                 <thead>
                                                 <tr>
                                                     <th>Name</th>
@@ -69,26 +71,33 @@
                                                     <th>Email</th>
                                                     <th>Contact</th>
                                                     <th>Gender</th>
+                                                    <th>Role</th>
                                                     <th>Action</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
                                                 @foreach($users as $val)
                                                     @if($val->role_id != 1)
-                                                    <tr>
-                                                        <td>{{ $val->name }}</td>
-                                                        <td>{{ $val->father_name }}</td>
-                                                        <td>{{ $val->email }}</td>
-                                                        <td>{{ $val->contact }}</td>
-                                                        <td>{{ $val->gender }}</td>
-                                                        <td>
-                                                            <a data-toggle="modal" data-target="#b{{ $val->id }}"
-                                                               class="btn btn-sm btn-warning ck waves-effect waves-light">
-                                                                edit
-                                                            </a>
-                                                            <a href="{{ route('delete.user', ['id' => $val->id]) }}" class="btn btn-sm btn-danger">delete</a>
-                                                        </td>
-                                                    </tr>
+                                                        <tr>
+                                                            <td>{{ $val->name }}</td>
+                                                            <td>{{ $val->father_name }}</td>
+                                                            <td>{{ $val->email }}</td>
+                                                            <td>{{ $val->contact }}</td>
+                                                            <td>{{ $val->gender }}</td>
+                                                            @if($val->role_id == 2)
+                                                                <td>Manager</td>
+                                                            @elseif($val->role_id == 3)
+                                                                <td>Student</td>
+                                                            @endif
+                                                            <td>
+                                                                <a data-toggle="modal" data-target="#b{{ $val->id }}"
+                                                                   class="btn btn-sm btn-warning ck waves-effect waves-light">
+                                                                    edit
+                                                                </a>
+                                                                <a href="{{ route('delete.user', ['id' => $val->id]) }}"
+                                                                   class="btn btn-sm btn-danger">delete</a>
+                                                            </td>
+                                                        </tr>
                                                     @endif
                                                     <!-- Modal Add Category -->
                                                     <div class="modal fade none-border" id="b{{ $val->id }}">
@@ -129,7 +138,7 @@
                                                                             <div class="col-md-6">
 
                                                                                 <label class="control-label">Email
-                                                                                    </label>
+                                                                                </label>
                                                                                 <input class="form-control form-white"
                                                                                        name="email"
                                                                                        value="{{ $val->email }}"
@@ -138,7 +147,7 @@
                                                                             </div>
                                                                             <div class="col-md-6">
                                                                                 <label class="control-label">Contact
-                                                                                    </label>
+                                                                                </label>
                                                                                 <input class="form-control form-white"
                                                                                        name="contact"
                                                                                        value="{{ $val->contact }}"
@@ -146,11 +155,15 @@
                                                                                        type="number"/>
                                                                             </div>
                                                                             <div class="col-md-12">
-                                                                                <label class="control-label">Gender</label>
-                                                                                <select class="form-control form-white" name="gender">
-                                                                                    <option value="{{ $val->gender }}" selected>{{ $val->gender }}</option>
+                                                                                <label
+                                                                                    class="control-label">Gender</label>
+                                                                                <select class="form-control form-white"
+                                                                                        name="gender">
+                                                                                    <option value="{{ $val->gender }}"
+                                                                                            selected>{{ $val->gender }}</option>
                                                                                     <option value="male">Male</option>
-                                                                                    <option value="female">Female</option>
+                                                                                    <option value="female">Female
+                                                                                    </option>
                                                                                     <option value="other">Other</option>
 
                                                                                 </select>
@@ -163,10 +176,10 @@
 
 
                                                                             <textarea class="form-control form-white"
-                                                                                   name="address"
-                                                                                   value="{{ $val->address }}"
-                                                                                   row="4"
-                                                                                   type="text"></textarea>
+                                                                                      name="address"
+                                                                                      value="{{ $val->address }}"
+                                                                                      row="4"
+                                                                                      type="text"></textarea>
 
 
                                                                         </div>
@@ -178,7 +191,7 @@
                                                                                 data-dismiss="modal">Close
                                                                         </button>
                                                                         <button type="submit"
-                                                                                class="btn btn-danger">Save
+                                                                                class="btn btn-danger">Update
                                                                         </button>
                                                                     </div>
                                                                 </div>

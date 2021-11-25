@@ -13,6 +13,14 @@ use App\Http\Controllers as Web;
 | contains the "web" middleware group. Now create something great!
 |
 */
+// Clear Website Cache
+Route::get('/clear', function(){
+    Artisan::call('config:cache');
+    Artisan::call('cache:clear');
+    Artisan::call('route:clear');
+    return "Cache is cleared";
+});
+
 
 Route::get('/', function () {
     return view('auth/login');
@@ -27,16 +35,20 @@ Auth::routes();
 //User routes
 Route::get('/logout', [Web\Auth\LoginController::class, 'logout'])->name('logout');
 Route::get('/home', [Web\HomeController::class, 'index'])->name('home');
+Route::get('/add-user', [Web\HomeController::class, 'add_user'])->name('add.user');
+Route::post('/create-user', [Web\HomeController::class, 'create_user'])->name('create.user');
 Route::get('/all-users', [Web\HomeController::class, 'all_users'])->name('all.users');
 Route::post('/update-users', [Web\HomeController::class, 'update_user'])->name('update.user');
 Route::post('/delete-user/{id}', [Web\HomeController::class, 'delete_user'])->name('delete.user');
 
 
+Route::post('/assign-manger', [Web\HomeController::class, 'assign_manger'])->name('assign.manger');
+
+//Student Routes
 Route::get('/profile', [Web\StudentController::class, 'profile'])->name('profile');
 Route::post('/update-profile', [Web\StudentController::class, 'update_profile'])->name('update.profile');
 Route::get('/change-password', [Web\StudentController::class, 'change_password'])->name('change.password');
 Route::post('/change-password', [Web\StudentController::class, 'update_password'])->name('update.password');
-Route::get('/book-hostel', [Web\StudentController::class, 'book_hostel'])->name('book.hostel');
 Route::get('/room-detail', [Web\StudentController::class, 'room_detail'])->name('room.detail');
 
 //Rooms Rotes
@@ -45,12 +57,24 @@ Route::post('/create-room', [Web\RoomController::class, 'create_room'])->name('c
 Route::get('/all-rooms', [Web\RoomController::class, 'all_rooms'])->name('all.rooms');
 Route::post('/update-room', [Web\RoomController::class, 'update_room'])->name('update.room');
 Route::get('/delete-room/{id}', [Web\RoomController::class, 'delete_room'])->name('delete.room');
+Route::post('get-rooms', [Web\RoomController::class, 'get_rooms'])->name('get.rooms');
 
+//Courses Routes
 Route::get('/add-course', [Web\CourseController::class, 'index'])->name('add.course');
 Route::post('/create-course', [Web\CourseController::class, 'create_course'])->name('create.course');
 Route::get('/all-courses', [Web\CourseController::class, 'all_courses'])->name('all.courses');
 Route::post('/update-course', [Web\CourseController::class, 'update_course'])->name('update.course');
 Route::post('/delete-course/{id}', [Web\CourseController::class, 'delete_course'])->name('delete.course');
+
+
+// Hostel Booking Route
+Route::get('/hostel-booking', [Web\HostelController::class, 'index'])->name('hostel.booking');
+Route::post('/create-booking', [Web\HostelController::class, 'create_booking'])->name('create.booking');
+Route::get('/add-hostel', [Web\HostelController::class, 'add_hostel'])->name('add.hostel');
+Route::post('/create-hostel', [Web\HostelController::class, 'create_hostel'])->name('create.hostel');
+Route::get('/show-hostel', [Web\HostelController::class, 'show_hostel'])->name('show.hostel');
+Route::post('/update-hostel', [Web\HostelController::class, 'update_hostel'])->name('update.hostel');
+Route::get('/delete_hostel/{id}', [Web\HostelController::class, 'delete_hostel'])->name('delete.hostel');
 
 
 

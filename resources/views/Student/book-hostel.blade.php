@@ -18,7 +18,13 @@
                         <div class="col-lg-8 p-r-0 title-margin-right">
                             <div class="page-header">
                                 <div class="page-title">
-                                    <h1 class="text-uppercase">{{ auth()->user()->name }} Profile</h1>
+                                    @if($booked_user == null)
+                                        <h1 class="text-uppercase">{{ auth()->user()->name }} You can book hostel from
+                                            here</h1>
+                                    @else
+                                        <h1 class="text-uppercase">{{ auth()->user()->name }} Hostel already booked by
+                                            you</h1>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -28,12 +34,30 @@
                                 <div class="page-title">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
-                                        <li class="breadcrumb-item active">Profile</li>
+                                        <li class="breadcrumb-item active">Hostel Booking</li>
                                     </ol>
                                 </div>
                             </div>
                         </div>
                         <!-- /# column -->
+
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                        @if (\Session::has('success'))
+                            <div class="alert alert-success">
+                                <ul>
+                                    <li>{!! \Session::get('success') !!}</li>
+                                </ul>
+                            </div>
+                        @endif
+
                     </div>
                     <!-- /# row -->
                     <section id="main-content">
@@ -41,144 +65,213 @@
                             <div class="col-lg-12">
                                 <div class="card">
                                     <div class="card-body">
+                                        <div>
+                                            <h3 class="alert alert-success">Room Information</h3>
+                                        </div>
                                         <div class="form-validation">
-                                            <form class="form-valide" action="#" method="post">
+                                            <form class="form-valide" action="{{ route('create.booking') }}" method="POST">
+                                                @csrf
                                                 <div class="form-group row">
-                                                    <label class="col-lg-4 col-form-label" for="val-username">Username <span class="text-danger">*</span></label>
+                                                    <label class="col-lg-4 col-form-label" for="val-select2">Select Room
+                                                        <span class="text-danger">*</span></label>
                                                     <div class="col-lg-8">
-                                                        <input type="text" class="form-control" id="val-username" name="val-username" placeholder="Enter a username..">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label class="col-lg-4 col-form-label" for="val-email">Email <span class="text-danger">*</span></label>
-                                                    <div class="col-lg-8">
-                                                        <input type="text" class="form-control" id="val-email" name="val-email" placeholder="Your valid email..">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label class="col-lg-4 col-form-label" for="val-password">Password <span class="text-danger">*</span></label>
-                                                    <div class="col-lg-8">
-                                                        <input type="password" class="form-control" id="val-password" name="val-password" placeholder="Choose a safe one..">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label class="col-lg-4 col-form-label" for="val-confirm-password">Confirm Password <span class="text-danger">*</span></label>
-                                                    <div class="col-lg-8">
-                                                        <input type="password" class="form-control" id="val-confirm-password" name="val-confirm-password" placeholder="..and confirm it!">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label class="col-lg-4 col-form-label" for="val-select2">Select2 <span class="text-danger">*</span></label>
-                                                    <div class="col-lg-8">
-                                                        <select class="js-select2 form-control" id="val-select2" name="val-select2" style="width: 100%;" data-placeholder="Choose one..">
-                                                            <option></option>
-                                                            <option value="html">HTML</option>
-                                                            <option value="css">CSS</option>
-                                                            <option value="javascript">JavaScript</option>
-                                                            <option value="angular">Angular</option>
-                                                            <option value="angular">React</option>
-                                                            <option value="vuejs">Vue.js</option>
-                                                            <option value="ruby">Ruby</option>
-                                                            <option value="php">PHP</option>
-                                                            <option value="asp">ASP.NET</option>
-                                                            <option value="python">Python</option>
-                                                            <option value="mysql">MySQL</option>
+                                                        <select class="js-select2 form-control" name="room_id"
+                                                                id="room_id" name="val-select2" style="width: 100%;"
+                                                                data-placeholder="Choose one..">
+                                                            <option selected disabled>---</option>
+                                                            @foreach($rooms as $val)
+                                                                <option
+                                                                    value="{{ $val->id }}">{{ $val->room_no }}</option>
+                                                            @endforeach
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
-                                                    <label class="col-lg-4 col-form-label" for="val-select2-multiple">Select2 Multiple <span class="text-danger">*</span></label>
+                                                    <label class="col-lg-4 col-form-label" for="val-email">Room Details
+                                                        <span class="text-danger">*</span></label>
                                                     <div class="col-lg-8">
-                                                        <select class="js-select2 form-control" id="val-select2-multiple" name="val-select2-multiple" style="width: 100%;" data-placeholder="Choose at least two.." multiple>
-                                                            <option></option>
-                                                            <option value="html">HTML</option>
-                                                            <option value="css">CSS</option>
-                                                            <option value="javascript">JavaScript</option>
-                                                            <option value="angular">Angular</option>
-                                                            <option value="angular">React</option>
-                                                            <option value="vuejs">Vue.js</option>
-                                                            <option value="ruby">Ruby</option>
-                                                            <option value="php">PHP</option>
-                                                            <option value="asp">ASP.NET</option>
-                                                            <option value="python">Python</option>
-                                                            <option value="mysql">MySQL</option>
+                                                        <p class="total_seats" style="color:red"></p>
+                                                        <p class="total_fees" style="color:red"></p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label class="col-lg-4 col-form-label" for="val-select2">Food Status
+                                                        <span class="text-danger">*</span></label>
+                                                    <div class="col-lg-8">
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio"
+                                                                   name="food_status" id="inlineRadio1" value="0">
+                                                            <label class="form-check-label" for="inlineRadio1">Without
+                                                                Food</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio"
+                                                                   name="food_status" id="inlineRadio2" value="2000">
+                                                            <label class="form-check-label" for="inlineRadio2">With
+                                                                Food(Rs 2000.00 Per Month Extra)</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-lg-4 col-form-label" for="val-suggestions">Stay
+                                                        From <span class="text-danger">*</span></label>
+                                                    <div class="col-lg-8">
+                                                        <input type="date" class="form-control" id="val-suggestions"
+                                                               name="stay_from"/>
+                                                    </div>
+                                                </div>
+
+                                                <div>
+                                                    <h3 class="alert alert-success">Personal Information</h3>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-lg-4 col-form-label" for="val-select2">Select
+                                                        Course <span class="text-danger">*</span></label>
+                                                    <div class="col-lg-8">
+                                                        <select class="js-select2 form-control"
+                                                                 name="course_id" style="width: 100%;" >
+                                                            <option selected disabled>---</option>
+                                                            @foreach($course as $val)
+                                                                <option value="{{ $val->id }}">{{ $val->name }}</option>
+                                                            @endforeach
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
-                                                    <label class="col-lg-4 col-form-label" for="val-suggestions">Suggestions <span class="text-danger">*</span></label>
+                                                    <input type="hidden" name="user_id"
+                                                           value="{{ auth()->user()->id }}">
+                                                    <label class="col-lg-4 col-form-label" for="val-username">Username
+                                                        <span class="text-danger">*</span></label>
                                                     <div class="col-lg-8">
-                                                        <textarea class="form-control" id="val-suggestions" name="val-suggestions" rows="5" placeholder="What would you like to see?"></textarea>
+                                                        <input type="text" class="form-control" id="val-username"
+                                                               name="name" value="{{ auth()->user()->name }}" disabled/>
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
-                                                    <label class="col-lg-4 col-form-label" for="val-skill">Best Skill <span class="text-danger">*</span></label>
-                                                    <div class="col-lg-6">
-                                                        <select class="form-control" id="val-skill" name="val-skill">
-                                                            <option value="">Please select</option>
-                                                            <option value="html">HTML</option>
-                                                            <option value="css">CSS</option>
-                                                            <option value="javascript">JavaScript</option>
-                                                            <option value="angular">Angular</option>
-                                                            <option value="angular">React</option>
-                                                            <option value="vuejs">Vue.js</option>
-                                                            <option value="ruby">Ruby</option>
-                                                            <option value="php">PHP</option>
-                                                            <option value="asp">ASP.NET</option>
-                                                            <option value="python">Python</option>
-                                                            <option value="mysql">MySQL</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label class="col-lg-4 col-form-label" for="val-currency">Currency <span class="text-danger">*</span></label>
-                                                    <div class="col-lg-6">
-                                                        <input type="text" class="form-control" id="val-currency" name="val-currency" placeholder="$21.60">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label class="col-lg-4 col-form-label" for="val-website">Website <span class="text-danger">*</span></label>
-                                                    <div class="col-lg-6">
-                                                        <input type="text" class="form-control" id="val-website" name="val-website" placeholder="http://example.com">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label class="col-lg-4 col-form-label" for="val-phoneus">Phone (US) <span class="text-danger">*</span></label>
-                                                    <div class="col-lg-6">
-                                                        <input type="text" class="form-control" id="val-phoneus" name="val-phoneus" placeholder="212-999-0000">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label class="col-lg-4 col-form-label" for="val-digits">Digits <span class="text-danger">*</span></label>
-                                                    <div class="col-lg-6">
-                                                        <input type="text" class="form-control" id="val-digits" name="val-digits" placeholder="5">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label class="col-lg-4 col-form-label" for="val-number">Number <span class="text-danger">*</span></label>
-                                                    <div class="col-lg-6">
-                                                        <input type="text" class="form-control" id="val-number" name="val-number" placeholder="5.0">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label class="col-lg-4 col-form-label" for="val-range">Range [1, 5] <span class="text-danger">*</span></label>
-                                                    <div class="col-lg-6">
-                                                        <input type="text" class="form-control" id="val-range" name="val-range" placeholder="4">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label class="col-lg-4 col-form-label"><a data-toggle="modal" data-target="#modal-terms" href="#">Terms &amp; Conditions</a> <span class="text-danger">*</span></label>
+                                                    <label class="col-lg-4 col-form-label" for="val-username">Father
+                                                        Name <span class="text-danger">*</span></label>
                                                     <div class="col-lg-8">
-                                                        <label class="css-control css-control-primary css-checkbox" for="val-terms">
-                                                            <input type="checkbox" class="css-control-input" id="val-terms" name="val-terms" value="1">
-                                                            <span class="css-control-indicator"></span> I agree to the terms
-                                                        </label>
+                                                        <input type="text" class="form-control" id="val-username"
+                                                               name="father_name"
+                                                               value="{{ auth()->user()->father_name }}" disabled/>
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
-                                                    <div class="col-lg-8 ml-auto">
-                                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                                    <label class="col-lg-4 col-form-label" for="val-email">Email <span
+                                                            class="text-danger">*</span></label>
+                                                    <div class="col-lg-8">
+                                                        <input type="email" class="form-control" id="val-email"
+                                                               name="email" value="{{ auth()->user()->email }}"
+                                                               disabled/>
                                                     </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label class="col-lg-4 col-form-label" for="val-select2">Gender
+                                                        <span class="text-danger">*</span></label>
+                                                    <div class="col-lg-8">
+                                                        <input type="email" class="form-control" id="val-email"
+                                                               name="email" value="{{ auth()->user()->gender }}"
+                                                               disabled/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-lg-4 col-form-label" for="val-phoneus">Contact
+                                                        Number<span class="text-danger">*</span></label>
+                                                    <div class="col-lg-8">
+                                                        <input type="number" class="form-control" id="val-phoneus"
+                                                               name="contact"
+                                                               value="{{ auth()->user()->contact }}" disabled/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-lg-4 col-form-label" for="val-suggestions">Address
+                                                        <span class="text-danger">*</span></label>
+                                                    <div class="col-lg-8">
+                                                        <input type="text" class="form-control" id="val-suggestions"
+                                                               name="address"
+                                                               placeholder="Enter your address..."
+                                                               value="{{ auth()->user()->address }}" disabled/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label class="col-lg-4 col-form-label" for="val-suggestions">Emergency
+                                                        Contact:
+                                                        <span class="text-danger">*</span></label>
+                                                    <div class="col-lg-8">
+                                                        <input type="number" class="form-control" id="val-suggestions"
+                                                               name="emergency_contact"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-lg-4 col-form-label" for="val-suggestions">Guardian
+                                                        Name
+                                                        <span class="text-danger">*</span></label>
+                                                    <div class="col-lg-8">
+                                                        <input type="text" class="form-control" id="val-suggestions"
+                                                               name="guardian_name"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-lg-4 col-form-label" for="val-suggestions">Guardian
+                                                        Relation
+                                                        <span class="text-danger">*</span></label>
+                                                    <div class="col-lg-8">
+                                                        <input type="text" class="form-control" id="val-suggestions"
+                                                               name="guardian_relation"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-lg-4 col-form-label" for="val-suggestions">Guardian
+                                                        Contact
+                                                        <span class="text-danger">*</span></label>
+                                                    <div class="col-lg-8">
+                                                        <input type="number" class="form-control" id="val-suggestions"
+                                                               name="guardian_contact"/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label class="col-lg-4 col-form-label" for="val-suggestions">Permanent
+                                                        Address
+                                                        <span class="text-danger">*</span></label>
+                                                    <div class="col-lg-8">
+                                                        <input type="text" class="form-control" id="val-suggestions"
+                                                               name="permanent_address"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-lg-4 col-form-label" for="val-suggestions">Zip
+                                                        Code
+                                                        <span class="text-danger">*</span></label>
+                                                    <div class="col-lg-8">
+                                                        <input type="number" class="form-control" id="val-suggestions"
+                                                               name="zip_code"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-lg-4 col-form-label" for="val-suggestions">City
+                                                        <span class="text-danger">*</span></label>
+                                                    <div class="col-lg-8">
+                                                        <input type="text" class="form-control" id="val-suggestions"
+                                                               name="city"/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label class="col-lg-4 col-form-label" for="val-suggestions">state
+                                                        <span class="text-danger">*</span></label>
+                                                    <div class="col-lg-8">
+                                                        <input type="text" class="form-control" id="val-suggestions"
+                                                               name="state"/>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="col-lg-8 ml-auto">
+                                                    <button type="submit" class="btn btn-primary btn-block">Submit</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -191,7 +284,37 @@
                 </div>
             </div>
         </div>
+        <script>
+            $(document).ready(function () {
+                $('#room_id').on('change', function () {
+                    var room_id = $("#room_id option:selected").val();
 
+                    let _token = $('meta[name="csrf-token"]').attr('content');
+
+                    $.ajax({
+                        url: "/get-rooms",
+                        type: "POST",
+                        data: {
+                            room_id: room_id,
+                            _token: _token
+                        },
+                        success: function (response) {
+                            var total_space = response.total_space;
+                            var fee_per_student = response.fee_per_student;
+                            $('.total_seats').html("This Room Have " + total_space + " Bed Space Available")
+                            $('.total_fees').html("Fees Per Student: " + fee_per_student)
+
+
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    });
+                });
+
+            });
+
+        </script>
 @endsection
 
 @push('custom-scripts')

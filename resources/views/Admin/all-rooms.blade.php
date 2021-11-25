@@ -65,7 +65,7 @@
                                                 <thead>
                                                 <tr>
                                                     <th>Room Number</th>
-                                                    <th>Rooms Seats</th>
+                                                    <th>Rooms Space Available</th>
                                                     <th>Fee Per Student</th>
                                                     <th>Action</th>
                                                 </tr>
@@ -73,8 +73,8 @@
                                                 <tbody>
                                                 @foreach($rooms as $val)
                                                 <tr>
-                                                    <td>{{ $val->room_no }}</td>
-                                                    <td>{{ $val->room_seats }}</td>
+                                                    <td>{{ $val->room_no }} Room</td>
+                                                    <td>{{ $val->total_space }} Bed</td>
                                                     <td>{{ $val->fee_per_student }}</td>
                                                     <td>
                                                         <a data-toggle="modal" data-target="#c{{ $val->id }}"
@@ -112,16 +112,25 @@
                                                                                    type="number"/>
                                                                         </div>
                                                                         <div class="col-md-6">
-                                                                            <label class="control-label">Room
-                                                                                Seats</label>
-                                                                            <input class="form-control form-white"
-                                                                                   name="room_seats"
-                                                                                   value="{{ $val->room_seats }}"
-                                                                                   placeholder=""
-                                                                                   type="text"/>
+                                                                            <label class="control-label">Room Space Available
+                                                                                </label>
+                                                                            <select class="js-select2 form-control" id="val-select2"
+                                                                                    name="total_space" style="width: 100%;"
+                                                                                    >
+                                                                                @if($val->total_space)
+                                                                                    <option value="{{ $val->total_space }}" selected
+                                                                                            disabled>{{ $val->total_space }}</option>
+                                                                                @endif
+                                                                                <option value="1">Single Bed</option>
+                                                                                <option value="2">Two Bed</option>
+                                                                                <option value="3">Three Bed</option>
+                                                                                <option value="4">Four Bed</option>
+                                                                                <option value="5">Five Bed</option>
+                                                                            </select>
+
                                                                         </div>
                                                                         <div class="col-md-6">
-                                                                            <label class="control-label">fee_per_student
+                                                                            <label class="control-label">Fee Per Student
                                                                             </label>
                                                                             <input class="form-control form-white"
                                                                                    name="fee_per_student"

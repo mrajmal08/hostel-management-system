@@ -32,6 +32,8 @@
     <link href="{{ asset('assets/css/lib/helper.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
 
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
 
     @stack('custom-styles')
 

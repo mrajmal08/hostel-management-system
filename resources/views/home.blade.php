@@ -73,22 +73,22 @@
                                     <div class="stat-widget-one">
                                         <div class="stat-icon dib"><i class="ti-user color-primary border-primary"></i>
                                         </div>
-                                        <div class="stat-content dib">
+                                        <a href="{{ route('profile') }}" class="stat-content dib">
                                             <div class="stat-text">My Profile</div>
-                                            <div class="stat-digit">961</div>
-                                        </div>
+                                            <div class="stat-digit"><span class="ti-share"></span></div>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="card">
                                     <div class="stat-widget-one">
-                                        <div class="stat-icon dib"><i class="ti-layout-grid2 color-pink border-pink"></i>
+                                        <div class="stat-icon dib"><i class="ti-home color-pink border-pink"></i>
                                         </div>
-                                        <div class="stat-content dib">
+                                        <a href="{{ route('room.detail') }}" class="stat-content dib">
                                             <div class="stat-text">My Room</div>
-                                            <div class="stat-digit">770</div>
-                                        </div>
+                                            <div class="stat-digit"><span class="ti-share"></span></div>
+                                        </a>
                                     </div>
                                 </div>
                             </div>

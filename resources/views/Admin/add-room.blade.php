@@ -81,11 +81,11 @@
                                                                 name="room_seats" style="width: 100%;"
                                                                 data-placeholder="Choose one..">
                                                             <option selected disabled>--Select Seats--</option>
-                                                            <option value="single seats">Single Seater</option>
-                                                            <option value="two seats">Two Seater</option>
-                                                            <option value="three seats">Three Seater</option>
-                                                            <option value="four seats">Four Seater</option>
-                                                            <option value="five seats">Five Seater</option>
+                                                            <option value="1">Single Seater</option>
+                                                            <option value="2">Two Seater</option>
+                                                            <option value="3">Three Seater</option>
+                                                            <option value="4">Four Seater</option>
+                                                            <option value="5">Five Seater</option>
 
                                                         </select>
                                                     </div>

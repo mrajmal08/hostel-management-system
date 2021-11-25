@@ -61,7 +61,8 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="form-validation">
-                                            <form class="form-valide" action="{{ route('update.profile') }}" method="POST">
+                                            <form class="form-valide" action="{{ route('update.profile') }}"
+                                                  method="POST">
                                                 @csrf
                                                 <div class="form-group row">
                                                     <input type="hidden" name="id" value="{{ auth()->user()->id }}">
@@ -69,7 +70,7 @@
                                                         <span class="text-danger">*</span></label>
                                                     <div class="col-lg-8">
                                                         <input type="text" class="form-control" id="val-username"
-                                                               name="name" value="{{ auth()->user()->name }}">
+                                                               name="name" value="{{ auth()->user()->name }}"/>
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
@@ -77,7 +78,8 @@
                                                         Name <span class="text-danger">*</span></label>
                                                     <div class="col-lg-8">
                                                         <input type="text" class="form-control" id="val-username"
-                                                               name="father_name" placeholder="Enter your Father Name" value="{{ auth()->user()->father_name }}">
+                                                               name="father_name"
+                                                               value="{{ auth()->user()->father_name }}"/>
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
@@ -85,7 +87,7 @@
                                                             class="text-danger">*</span></label>
                                                     <div class="col-lg-8">
                                                         <input type="email" class="form-control" id="val-email"
-                                                               name="email" value="{{ auth()->user()->email }}">
+                                                               name="email" value="{{ auth()->user()->email }}"/>
                                                     </div>
                                                 </div>
 
@@ -95,9 +97,10 @@
                                                     <div class="col-lg-8">
                                                         <select class="js-select2 form-control" id="val-select2"
                                                                 name="gender" style="width: 100%;"
-                                                                data-placeholder="Choose one..">
+                                                                >
                                                             @if(auth()->user()->gender)
-                                                            <option value="{{ auth()->user()->gender }}" selected disabled>{{ auth()->user()->gender }}</option>
+                                                                <option value="{{ auth()->user()->gender }}" selected
+                                                                        disabled>{{ auth()->user()->gender }}</option>
                                                             @endif
                                                             <option value="male">Male</option>
                                                             <option value="female">Female</option>
@@ -106,28 +109,28 @@
                                                         </select>
                                                     </div>
                                                 </div>
-
-                                                <div class="form-group row">
-                                                    <label class="col-lg-4 col-form-label" for="val-suggestions">Address
-                                                        <span class="text-danger">*</span></label>
-                                                    <div class="col-lg-8">
-                                                        <input type="text" class="form-control" id="val-suggestions"
-                                                                  name="address" rows="5"
-                                                                  placeholder="Enter your address..." value="{{ auth()->user()->address }}" />
-                                                    </div>
-                                                </div>
-
                                                 <div class="form-group row">
                                                     <label class="col-lg-4 col-form-label" for="val-phoneus">Contact
                                                         Number<span class="text-danger">*</span></label>
                                                     <div class="col-lg-8">
                                                         <input type="number" class="form-control" id="val-phoneus"
-                                                               name="contact" placeholder="212-999-0000" value="{{ auth()->user()->contact }}" ></div>
+                                                               name="contact" placeholder=""
+                                                               value="{{ auth()->user()->contact }}"/></div>
                                                 </div>
-
+                                                <div class="form-group row">
+                                                    <label class="col-lg-4 col-form-label" for="val-suggestions">Address
+                                                        <span class="text-danger">*</span></label>
+                                                    <div class="col-lg-8">
+                                                        <input type="text" class="form-control" id="val-suggestions"
+                                                               name="address" rows="5"
+                                                               placeholder="Enter your address..."
+                                                               value="{{ auth()->user()->address }}"/>
+                                                    </div>
+                                                </div>
                                                 <div class="form-group row">
                                                     <div class="col-lg-8 ml-auto">
-                                                        <button type="submit" class="btn btn-primary btn-block">Update</button>
+                                                        <button type="submit" class="btn btn-primary btn-block">Update
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </form>
