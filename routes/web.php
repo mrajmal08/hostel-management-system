@@ -66,6 +66,8 @@ Route::get('my-rooms', [Web\RoomController::class, 'my_rooms'])->name('my.rooms'
 Route::get('my-student', [Web\RoomController::class, 'my_student'])->name('my.student');
 Route::get('pay-fees', [Web\RoomController::class, 'pay_fees'])->name('pay.fees');
 Route::post('fees-submit', [Web\RoomController::class, 'fees_submit'])->name('fees.submit');
+Route::get('fees-status', [Web\RoomController::class, 'fees_status'])->name('fees.status');
+Route::post('update-fees-status', [Web\RoomController::class, 'update_fees_status'])->name('update.fees_status');
 
 //Courses Routes
 Route::get('/add-course', [Web\CourseController::class, 'index'])->name('add.course');

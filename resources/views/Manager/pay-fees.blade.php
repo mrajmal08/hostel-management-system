@@ -19,7 +19,7 @@
                         <div class="col-lg-8 p-r-0 title-margin-right">
                             <div class="page-header">
                                 <div class="page-title">
-                                    <h1 class="text-uppercase">Add a Hostel</h1>
+                                    <h1 class="text-uppercase">Pay Your Hostel Fees Here On Time</h1>
                                 </div>
                             </div>
                         </div>
@@ -61,20 +61,29 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="form-validation">
-                                            <form class="form-valide" action="{{ route('fees.submit') }}" method="POST">
+                                            <form class="form-valide" action="{{ route('fees.submit') }}" method="POST" enctype="multipart/form-data">
                                                 @csrf
 
                                                 <div class="form-group row">
                                                     <label class="col-lg-4 col-form-label" for="val-username"> Upload Screen Shot
                                                         <span class="text-danger">*</span></label>
                                                     <div class="col-lg-8">
+                                                        <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
                                                         <input type="file" class="form-control" id="val-username"
-                                                               name="screen_shot" required />
+                                                               name="image" required />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-lg-4 col-form-label" for="val-username"> Choose Date
+                                                        <span class="text-danger">*</span></label>
+                                                    <div class="col-lg-8">
+                                                        <input type="date" class="form-control" id="val-username"
+                                                               name="month" required />
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-lg-8 ml-auto">
-                                                        <button type="submit" class="btn btn-primary btn-block">Add
+                                                        <button type="submit" class="btn btn-primary btn-block">
                                                             Post Screen Shot Of Payable slip
                                                         </button>
                                                     </div>
@@ -90,6 +99,16 @@
                 </div>
             </div>
         </div>
+
+{{--        <script>--}}
+{{--            $(document).ready(function () {--}}
+{{--                $(function() {--}}
+{{--                    $( "#datepicker" ).datepicker({dateFormat: 'yy'});--}}
+{{--                });--}}
+
+{{--            });--}}
+
+{{--        </script>--}}
 
 @endsection
 

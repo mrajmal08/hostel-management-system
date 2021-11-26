@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\BookHostel;
 use App\Models\Hostel;
+use App\Models\StudentDue;
 use Illuminate\Http\Request;
 use App\Models\Room;
 use Redirect;
+use Image;
 
 class RoomController extends Controller
 {
@@ -153,6 +155,51 @@ class RoomController extends Controller
     }
 
     public function fees_submit(Request $request){
-        dd($request->all());
+
+        $this->validate($request, [
+            'month' => 'required',
+            'image' => 'required',
+        ]);
+
+        $image = $request->file('image');
+        $input['image'] = time() . '.' . $image->getClientOriginalExtension();
+        $destinationPath = public_path('/images/');
+        $img = Image::make($image->getRealPath());
+        $img->resize(100, 100, function ($constraint) {
+            $constraint->aspectRatio();
+        })->save($destinationPath . '/' . $input['image']);
+
+        $result = StudentDue::create([
+            'user_id' => $request->user_id,
+            'month' => $request->month,
+            'screen_shot' => $input['image'],
+            'status' => "Not Approved",
+
+        ]);
+        if ($result) {
+            return back()->with('success', 'Your payment received wait for verification');
+        } else {
+            return Redirect::back()->withErrors(['Something went wrong']);
+        }
+    }
+
+    public function fees_status(){
+        $student_dues = StudentDue::orderBy('created_at', 'desc')->get();
+        return view('Manager.fees-status', compact('student_dues'));
+    }
+
+    public function update_fees_status(Request $request){
+        $this->validate($request, [
+            'status' => 'required',
+        ]);
+
+        $result = StudentDue::where('id', $request->user_id)->update([
+            'status' => "Verified",
+        ]);
+        if ($result) {
+            return back()->with('success', 'Payment Verified');
+        } else {
+            return Redirect::back()->withErrors(['Something went wrong']);
+        }
     }
 }

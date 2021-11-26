@@ -42,6 +42,8 @@
                 </li>
                     <li><a href="{{ route('manage.student') }}"><i class="ti-user"></i>Manage Student</a></li>
 
+                    <li><a href="{{ route('fees.status') }}"><i class="ti-user"></i>Fees Status</a></li>
+
                 @endif
 
                 @if(auth()->user()->role_id == 2)
@@ -60,6 +62,7 @@
                         </ul>
                     </li>
                     <li><a href="{{ route('my.student') }}"><i class="ti-user"></i>Manage Student</a></li>
+                    <li><a href="{{ route('fees.status') }}"><i class="ti-user"></i>Fees Status</a></li>
 
                 @endif
 
@@ -69,6 +72,7 @@
                 <li><a href="{{ route('hostel.booking') }}"><i class="ti-panel"></i> Book Hostel</a></li>
                 <li><a href="{{ route('room.detail') }}"><i class="ti-view-list-alt"></i> Room Detail</a></li>
                 <li><a href="{{ route('pay.fees') }}"><i class="ti-user"></i>Pay Fees</a></li>
+                <li><a href="{{ route('fees.status') }}"><i class="ti-user"></i>Fees Status</a></li>
 
                 @endif
             </ul>
