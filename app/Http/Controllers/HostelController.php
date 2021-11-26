@@ -34,10 +34,11 @@ class HostelController extends Controller
     {
        $users = User::all();
        $course = Course::all();
+       $hostels = Hostel::all();
        $rooms = Room::where('total_space', '>', '0')->get();
        $booked_user = BookHostel::where('user_id', Auth()->user()->id)->first();
 
-       return view('Student.book-hostel', compact('users', 'rooms', 'course', 'booked_user'));
+       return view('Student.book-hostel', compact('users', 'rooms', 'course','hostels', 'booked_user'));
     }
 
     /**
@@ -54,6 +55,7 @@ class HostelController extends Controller
         }
 
         $this->validate($request, [
+            'hostel_id' => 'required',
             'room_id' => 'required',
             'food_status' => 'required',
             'stay_from' => 'required',
@@ -80,6 +82,7 @@ class HostelController extends Controller
             'user_id' => $request->user_id,
             'room_id' => $request->room_id,
             'course_id' => $request->course_id,
+            'hostel_id' => $request->hostel_id,
             'food_status' => $request->food_status,
             'fees_per_month' => $room_detail->fee_per_student,
             'total_amount' => $fees_per_month,

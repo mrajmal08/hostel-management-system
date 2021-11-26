@@ -42,6 +42,7 @@ Route::post('/update-users', [Web\HomeController::class, 'update_user'])->name('
 Route::post('/delete-user/{id}', [Web\HomeController::class, 'delete_user'])->name('delete.user');
 
 
+Route::get('/manage-student', [Web\HomeController::class, 'manage_student'])->name('manage.student');
 Route::post('/assign-manger', [Web\HomeController::class, 'assign_manger'])->name('assign.manger');
 
 //Student Routes
@@ -58,6 +59,13 @@ Route::get('/all-rooms', [Web\RoomController::class, 'all_rooms'])->name('all.ro
 Route::post('/update-room', [Web\RoomController::class, 'update_room'])->name('update.room');
 Route::get('/delete-room/{id}', [Web\RoomController::class, 'delete_room'])->name('delete.room');
 Route::post('get-rooms', [Web\RoomController::class, 'get_rooms'])->name('get.rooms');
+
+
+//manager routes
+Route::get('my-rooms', [Web\RoomController::class, 'my_rooms'])->name('my.rooms');
+Route::get('my-student', [Web\RoomController::class, 'my_student'])->name('my.student');
+Route::get('pay-fees', [Web\RoomController::class, 'pay_fees'])->name('pay.fees');
+Route::post('fees-submit', [Web\RoomController::class, 'fees_submit'])->name('fees.submit');
 
 //Courses Routes
 Route::get('/add-course', [Web\CourseController::class, 'index'])->name('add.course');

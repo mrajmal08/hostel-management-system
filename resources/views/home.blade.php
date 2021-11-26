@@ -66,6 +66,36 @@
                         </div>
                     </div>
                 @endif
+
+                    @if(auth()->user()->role_id == 2)
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="card">
+                                    <div class="stat-widget-one">
+                                        <div class="stat-icon dib"><i class="ti-user color-primary border-primary"></i>
+                                        </div>
+                                        <div class="stat-content dib">
+                                            <div class="stat-text">Total Users</div>
+                                            <div class="stat-digit">{{ $my_students }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="card">
+                                    <div class="stat-widget-one">
+                                        <div class="stat-icon dib"><i class="ti-layout-grid2 color-pink border-pink"></i>
+                                        </div>
+                                        <div class="stat-content dib">
+                                            <div class="stat-text">Total Rooms</div>
+                                            <div class="stat-digit">{{ $my_rooms }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+
                     @if(auth()->user()->role_id == 3)
                         <div class="row">
                             <div class="col-lg-3">

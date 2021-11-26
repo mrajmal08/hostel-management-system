@@ -29,7 +29,7 @@
                                 <div class="page-title">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                                        <li class="breadcrumb-item active">All Users</li>
+                                        <li class="breadcrumb-item active">Management Students</li>
                                     </ol>
                                 </div>
                             </div>
@@ -66,39 +66,47 @@
                                                    class="table table-striped table-bordered">
                                                 <thead>
                                                 <tr>
-                                                    <th>Name</th>
-                                                    <th>Father Name</th>
-                                                    <th>Email</th>
-                                                    <th>Contact</th>
-                                                    <th>Gender</th>
-                                                    <th>Role</th>
-                                                    <th>Action</th>
+                                                    <th>Student Name</th>
+                                                    <th>Contact No</th>
+                                                    <th>Room No</th>
+                                                    <th>Seater</th>
+                                                    <th>Hostel Name</th>
+                                                    <th>Staying From</th>
+                                                    {{--                                                    <th>Action</th>--}}
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                @foreach($users as $val)
-                                                    @if($val->role_id != 1)
-                                                        <tr>
-                                                            <td>{{ $val->name }}</td>
-                                                            <td>{{ $val->father_name }}</td>
-                                                            <td>{{ $val->email }}</td>
-                                                            <td>{{ $val->contact }}</td>
-                                                            <td>{{ $val->gender }}</td>
-                                                            @if($val->role_id == 2)
-                                                                <td>Manager</td>
-                                                            @elseif($val->role_id == 3)
-                                                                <td>Student</td>
-                                                            @endif
-                                                            <td>
-                                                                <a data-toggle="modal" data-target="#b{{ $val->id }}"
-                                                                   class="btn btn-sm btn-warning ck waves-effect waves-light">
-                                                                    edit
-                                                                </a>
-                                                                <a href="{{ route('delete.user', ['id' => $val->id]) }}"
-                                                                   class="btn btn-sm btn-danger">delete</a>
-                                                            </td>
-                                                        </tr>
-                                                    @endif
+                                                @foreach($my_students as $val)
+
+                                                    <?php
+                                                    $student = \App\Models\User::where('id', $val->user_id)->first();
+                                                    $name = $student->name;
+                                                    $contact = $student->contact;
+                                                    $rooms = \App\Models\Room::where('id', $val->room_id)->first();
+                                                    $room_no = $rooms->room_no;
+                                                    $room_seats = $rooms->room_seats;
+
+                                                    $hoste_name = \App\Models\Hostel::where('id', $val->hostel_id)->pluck('name')->first();
+
+                                                    ?>
+
+                                                    <tr>
+                                                        <td>{{ $name }}</td>
+                                                        <td>{{ $contact }}</td>
+                                                        <td>{{ $room_no }}</td>
+                                                        <td>{{ $room_seats }}</td>
+                                                        <td>{{ $hoste_name }}</td>
+                                                        <td>{{ $val->stay_from }}</td>
+
+                                                        {{--                                                            <td>--}}
+                                                        {{--                                                                <a data-toggle="modal" data-target="#b{{ $val->id }}"--}}
+                                                        {{--                                                                   class="btn btn-sm btn-warning ck waves-effect waves-light">--}}
+                                                        {{--                                                                    edit--}}
+                                                        {{--                                                                </a>--}}
+                                                        {{--                                                                <a href="{{ route('delete.user', ['id' => $val->id]) }}"--}}
+                                                        {{--                                                                   class="btn btn-sm btn-danger">delete</a>--}}
+                                                        {{--                                                            </td>--}}
+                                                    </tr>
                                                     <!-- Modal Add Category -->
                                                     <div class="modal fade none-border" id="b{{ $val->id }}">
                                                         <div class="modal-dialog">

@@ -67,15 +67,20 @@
                                                     <th>Room Number</th>
                                                     <th>Rooms Space Available</th>
                                                     <th>Fee Per Student</th>
+                                                    <th>Hostel Name</th>
                                                     <th>Action</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
                                                 @foreach($rooms as $val)
+                                                    <?php
+                                                        $hostel_name = \App\Models\Hostel::where('id', $val->hostel_id)->pluck('name')->first();
+                                                    ?>
                                                 <tr>
                                                     <td>{{ $val->room_no }} Room</td>
                                                     <td>{{ $val->total_space }} Bed</td>
                                                     <td>{{ $val->fee_per_student }}</td>
+                                                    <td>{{ $hostel_name }}</td>
                                                     <td>
                                                         <a data-toggle="modal" data-target="#c{{ $val->id }}"
                                                            class="btn btn-sm btn-warning ck waves-effect waves-light">
@@ -147,7 +152,7 @@
                                                                             data-dismiss="modal">Close
                                                                     </button>
                                                                     <button type="submit"
-                                                                            class="btn btn-danger">Save
+                                                                            class="btn btn-danger">Update
                                                                     </button>
                                                                 </div>
                                                             </div>

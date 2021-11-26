@@ -13,6 +13,7 @@ class BookHostel extends Model
         'user_id',
         'room_id',
         'course_id',
+        'hostel_id',
         'food_status',
         'stay_from',
         'total_amount',

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BookHostel;
 use App\Models\Hostel;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
@@ -27,11 +28,17 @@ class HomeController extends Controller
      */
     public function index()
     {
+        //managers rooms
+        $hostel_id = Hostel::where('user_id', Auth()->user()->id)->pluck('id')->first();
+        $my_rooms = Room::where('hostel_id', $hostel_id)->get()->count();
+        $my_students = BookHostel::where('hostel_id', $hostel_id)->get()->count();
+
+
         $users = User::all();
         $rooms = Room::all();
         $total_users = count($users);
         $total_rooms = count($rooms);
-        return view('home', compact('total_users', 'total_rooms'));
+        return view('home', compact('total_users', 'total_rooms', 'my_rooms', 'my_students'));
     }
 
     public function add_user(){
@@ -83,6 +90,7 @@ class HomeController extends Controller
             'contact' => $request->contact,
             'gender' => $request->gender,
             'address' => $request->address,
+            'role_id' => $request->role_id,
         ]);
         if ($result) {
             return redirect()->back()->with('success', 'User Updated successfully');
@@ -122,6 +130,10 @@ class HomeController extends Controller
         } else {
             return Redirect::back()->withErrors(['Something went wrong']);
         }
+    }
 
+    public function manage_student(){
+        $bookings = BookHostel::all();
+        return view('Student.manage-student', compact('bookings'));
     }
 }

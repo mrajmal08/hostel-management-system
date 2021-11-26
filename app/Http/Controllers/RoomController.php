@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BookHostel;
+use App\Models\Hostel;
 use Illuminate\Http\Request;
 use App\Models\Room;
 use Redirect;
@@ -25,7 +27,8 @@ class RoomController extends Controller
      */
     public function index()
     {
-        return view('Admin.add-room');
+        $hostels = Hostel::all();
+        return view('Admin.add-room', compact('hostels'));
     }
 
     /**
@@ -36,6 +39,7 @@ class RoomController extends Controller
     public function create_room(Request $request)
     {
         $this->validate($request, [
+            'hostel_id' => 'required',
             'room_no' => 'required',
             'room_seats' => 'required',
             'fee_per_student' => 'required',
@@ -43,6 +47,7 @@ class RoomController extends Controller
 
         $result = Room::create([
             'room_no' => $request->room_no,
+            'hostel_id' => $request->hostel_id,
             'room_seats' => $request->room_seats,
             'fee_per_student' => $request->fee_per_student,
             'total_space' => $request->room_seats,
@@ -126,5 +131,28 @@ class RoomController extends Controller
         } else {
             return response('Id cannot be null');
         }
+    }
+
+    public function my_rooms(){
+
+        $hostel_id = Hostel::where('user_id', Auth()->user()->id)->pluck('id')->first();
+        $my_rooms = Room::where('hostel_id', $hostel_id)->get();
+
+        return view('Manager.my-rooms', compact('my_rooms'));
+    }
+
+    public function my_student(){
+        $hostel_id = Hostel::where('user_id', Auth()->user()->id)->pluck('id')->first();
+        $my_students = BookHostel::where('hostel_id', $hostel_id)->get();
+
+        return view('Manager.my-student', compact('my_students'));
+    }
+
+    public function pay_fees(){
+        return view('Manager.pay-fees');
+    }
+
+    public function fees_submit(Request $request){
+        dd($request->all());
     }
 }

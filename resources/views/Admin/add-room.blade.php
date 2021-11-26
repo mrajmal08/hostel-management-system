@@ -65,6 +65,24 @@
                                                 @csrf
 
                                                 <div class="form-group row">
+                                                    <label class="col-lg-4 col-form-label" for="val-username">Select
+                                                        Hostel
+                                                        <span class="text-danger">*</span></label>
+                                                    <div class="col-lg-8">
+                                                        <select class="js-select2 form-control" id="val-select2"
+                                                                name="hostel_id" style="width: 100%;"
+                                                                >
+                                                            <option selected disabled>--Select Hostel--</option>
+                                                            @foreach($hostels as $val)
+                                                            <option value="{{ $val->id }}">{{ $val->name }}</option>
+                                                           @endforeach
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-group row">
                                                     <label class="col-lg-4 col-form-label" for="val-username">Room
                                                         No.<span class="text-danger">*</span></label>
                                                     <div class="col-lg-8">

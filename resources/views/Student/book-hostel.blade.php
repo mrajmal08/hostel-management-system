@@ -19,10 +19,9 @@
                             <div class="page-header">
                                 <div class="page-title">
                                     @if($booked_user == null)
-                                        <h1 class="text-uppercase">{{ auth()->user()->name }} You can book hostel from
-                                            here</h1>
+                                        <h1 class="text-uppercase">WelCome {{ auth()->user()->name }},  The Luxury Hostel is waiting for you</h1>
                                     @else
-                                        <h1 class="text-uppercase">{{ auth()->user()->name }} Hostel already booked by
+                                        <h1 class="alert alert-danger">{{ auth()->user()->name }} Hostel already booked by
                                             you</h1>
                                     @endif
                                 </div>
@@ -71,12 +70,28 @@
                                         <div class="form-validation">
                                             <form class="form-valide" action="{{ route('create.booking') }}" method="POST">
                                                 @csrf
+
+                                                <div class="form-group row">
+                                                    <label class="col-lg-4 col-form-label" for="val-select2">Select Hostel
+                                                        <span class="text-danger">*</span></label>
+                                                    <div class="col-lg-8">
+                                                        <select class="js-select2 form-control"
+                                                                id="hostel_id" name="hostel_id" style="width: 100%;" >
+                                                            <option selected disabled>---</option>
+                                                            @foreach($hostels as $val)
+                                                                <option
+                                                                    value="{{ $val->id }}">{{ $val->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+
                                                 <div class="form-group row">
                                                     <label class="col-lg-4 col-form-label" for="val-select2">Select Room
                                                         <span class="text-danger">*</span></label>
                                                     <div class="col-lg-8">
-                                                        <select class="js-select2 form-control" name="room_id"
-                                                                id="room_id" name="val-select2" style="width: 100%;"
+                                                        <select class="js-select2 form-control"
+                                                                id="room_id" name="room_id" style="width: 100%;"
                                                                 data-placeholder="Choose one..">
                                                             <option selected disabled>---</option>
                                                             @foreach($rooms as $val)
@@ -191,7 +206,6 @@
                                                     <div class="col-lg-8">
                                                         <input type="text" class="form-control" id="val-suggestions"
                                                                name="address"
-                                                               placeholder="Enter your address..."
                                                                value="{{ auth()->user()->address }}" disabled/>
                                                     </div>
                                                 </div>
