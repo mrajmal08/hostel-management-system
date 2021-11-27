@@ -38,6 +38,7 @@ Route::get('/home', [Web\HomeController::class, 'index'])->name('home');
 Route::get('/add-user', [Web\HomeController::class, 'add_user'])->name('add.user');
 Route::post('/create-user', [Web\HomeController::class, 'create_user'])->name('create.user');
 Route::get('/all-users', [Web\HomeController::class, 'all_users'])->name('all.users');
+Route::get('/all-managers', [Web\HomeController::class, 'all_managers'])->name('all.managers');
 Route::post('/update-users', [Web\HomeController::class, 'update_user'])->name('update.user');
 Route::post('/delete-user/{id}', [Web\HomeController::class, 'delete_user'])->name('delete.user');
 

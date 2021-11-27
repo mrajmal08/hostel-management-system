@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\Room;
 use Redirect;
 use Image;
+Use \Carbon\Carbon;
 
 class RoomController extends Controller
 {
@@ -151,15 +152,39 @@ class RoomController extends Controller
     }
 
     public function pay_fees(){
-        return view('Manager.pay-fees');
+
+        //Get teh monthly fees of a student
+        $user_id = Auth()->user()->id;
+        $monthly_fees = BookHostel::where('user_id', $user_id)->pluck('total_amount')->first();
+
+        return view('Manager.pay-fees', compact('monthly_fees'));
     }
 
     public function fees_submit(Request $request){
 
         $this->validate($request, [
-            'month' => 'required',
+            'fees' => 'required',
             'image' => 'required',
         ]);
+
+        //get monthly fees of current user
+        $monthly_fees = BookHostel::where('user_id', Auth()->user()->id)->pluck('total_amount')->first();
+
+        if ($monthly_fees > $request->fees){
+            return Redirect::back()->withErrors(['Kindly pay your full fees']);
+        }
+
+        $first = str_replace('-', '', date('m-01-Y'));
+        $second = str_replace('-', '', date('m-02-Y'));
+        $third = str_replace('-', '', date('m-03-Y'));
+        $fourth = str_replace('-', '', date('m-04-Y'));
+        $fifth = str_replace('-', '', date('m-05-Y'));
+        $current_date = str_replace('-', '',date('m-d-Y'));
+        $today_date = date('y-m-d');
+
+        if($current_date != $first && $current_date != $second && $current_date != $third && $current_date != $fourth && $current_date != $fifth){
+            return Redirect::back()->withErrors(['Sorry, your fees submission date is over, kindly contact with your manger for further notice']);
+        }
 
         $image = $request->file('image');
         $input['image'] = time() . '.' . $image->getClientOriginalExtension();
@@ -171,7 +196,8 @@ class RoomController extends Controller
 
         $result = StudentDue::create([
             'user_id' => $request->user_id,
-            'month' => $request->month,
+            'fees' => $request->fees,
+            'date' => $today_date,
             'screen_shot' => $input['image'],
             'status' => "Not Approved",
 

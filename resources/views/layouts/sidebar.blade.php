@@ -21,6 +21,7 @@
                     <ul>
                         <li><a href="{{ route('add.user') }}">Add New Role</a></li>
                         <li><a href="{{ route('all.users') }}">All Roles</a></li>
+                        <li><a href="{{ route('all.managers') }}">All Managers</a></li>
                     </ul>
                 </li>
 

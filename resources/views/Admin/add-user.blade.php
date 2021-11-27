@@ -19,7 +19,7 @@
                         <div class="col-lg-8 p-r-0 title-margin-right">
                             <div class="page-header">
                                 <div class="page-title">
-                                    <h1 class="text-uppercase">Add a Room</h1>
+                                    <h1 class="text-uppercase">Add a Role</h1>
                                 </div>
                             </div>
                         </div>
@@ -29,7 +29,7 @@
                                 <div class="page-title">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
-                                        <li class="breadcrumb-item active">Room</li>
+                                        <li class="breadcrumb-item active">Roles</li>
                                     </ol>
                                 </div>
                             </div>

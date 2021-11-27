@@ -28,7 +28,7 @@
                                 <div class="page-title">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                                        <li class="breadcrumb-item active">All Rooms</li>
+                                        <li class="breadcrumb-item active">Fees Status</li>
                                     </ol>
                                 </div>
                             </div>
@@ -87,8 +87,8 @@
                                                         <td>{{ $hostel_name }}</td>
                                                         <td>{{ $room_no }}</td>
                                                         <td>{{ $monthly_fees }}</td>
-                                                        <td>{{ $val->month }}</td>
-                                                        <td><img src="{{ asset("images/".$val->screen_shot) }}" alt="screen shot"></td>
+                                                        <td>{{ $val->date }}</td>
+                                                        <td><img data-enlargeable width="100" style="cursor: zoom-in" src="{{ asset("images/".$val->screen_shot) }}" alt="screen shot"></td>
                                                         <td>{{ $val->status }}</td>
                                                         <td>
                                                             @if(auth()->user()->id == 3)
@@ -97,7 +97,6 @@
                                                                class="btn btn-sm btn-warning ck waves-effect waves-light">
                                                                 edit
                                                             </a>
-{{--                                                            <a href="{{ route('delete.room', ['id' => $val->id]) }}" class="btn btn-sm btn-danger">delete</a>--}}
                                                             @endif
                                                         </td>
                                                     </tr>
@@ -135,11 +134,8 @@
                                                                                     <option value="Verified">Verified</option>
 
                                                                                 </select>
-
                                                                             </div>
-
                                                                         </div>
-
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button"
@@ -173,17 +169,46 @@
             </div>
         </div>
 
+<script>
+    $('img[data-enlargeable]').addClass('img-enlargeable').click(function() {
+        var src = $(this).attr('src');
+        var modal;
 
-        @endsection
+        function removeModal() {
+            modal.remove();
+            $('body').off('keyup.modal-close');
+        }
+        modal = $('<div>').css({
+            background: 'RGBA(0,0,0,.5) url(' + src + ') no-repeat center',
+            backgroundSize: 'contain',
+            width: '100%',
+            height: '100%',
+            position: 'fixed',
+            zIndex: '10000',
+            top: '0',
+            left: '0',
+            cursor: 'zoom-out'
+        }).click(function() {
+            removeModal();
+        }).appendTo('body');
+        //handling ESC
+        $('body').on('keyup.modal-close', function(e) {
+            if (e.key === 'Escape') {
+                removeModal();
+            }
+        });
+    });
+</script>
+@endsection
 
-        @push('custom-scripts')
-            <script src="{{ asset('assets/js/lib/data-table/datatables.min.js') }}"></script>
-            <script src="{{ asset('assets/js/lib/data-table/dataTables.buttons.min.js') }}"></script>
-            <script src="{{ asset('assets/js/lib/data-table/buttons.flash.min.js') }}"></script>
-            <script src="{{ asset('assets/js/lib/data-table/jszip.min.js') }}"></script>
-            <script src="{{ asset('assets/js/lib/data-table/pdfmake.min.js') }}"></script>
-            <script src="{{ asset('assets/js/lib/data-table/vfs_fonts.js') }}"></script>
-            <script src="{{ asset('assets/js/lib/data-table/buttons.html5.min.js') }}"></script>
-            <script src="{{ asset('assets/js/lib/data-table/buttons.print.min.js') }}"></script>
-            <script src="{{ asset('assets/js/lib/data-table/datatables-init.js') }}"></script>
-    @endpush
+@push('custom-scripts')
+    <script src="{{ asset('assets/js/lib/data-table/datatables.min.js') }}"></script>
+    <script src="{{ asset('assets/js/lib/data-table/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('assets/js/lib/data-table/buttons.flash.min.js') }}"></script>
+    <script src="{{ asset('assets/js/lib/data-table/jszip.min.js') }}"></script>
+    <script src="{{ asset('assets/js/lib/data-table/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('assets/js/lib/data-table/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('assets/js/lib/data-table/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('assets/js/lib/data-table/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('assets/js/lib/data-table/datatables-init.js') }}"></script>
+@endpush

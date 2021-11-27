@@ -8,7 +8,6 @@
 
     @include('layouts.sidebar')
     <!-- /# sidebar -->
-
     <div class="header">
         @include('layouts.navbar')
 
@@ -19,7 +18,8 @@
                         <div class="col-lg-8 p-r-0 title-margin-right">
                             <div class="page-header">
                                 <div class="page-title">
-                                    <h1 class="text-uppercase">Pay Your Hostel Fees Here On Time</h1>
+                                    <h1 style="color: red">Pay Your Hostel Fees Between Date (1 to 5) on every
+                                        month otherwise you may be eliminated from hostel</h1>
                                 </div>
                             </div>
                         </div>
@@ -58,27 +58,34 @@
                     <section id="main-content">
                         <div class="row">
                             <div class="col-lg-12">
+                                <div class="mb-3">
+                                    <span class="alert alert-success">Your monthly fees is {{ $monthly_fees }} </span>
+                                </div>
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="form-validation">
-                                            <form class="form-valide" action="{{ route('fees.submit') }}" method="POST" enctype="multipart/form-data">
+                                            <form class="form-valide" action="{{ route('fees.submit') }}" method="POST"
+                                                  enctype="multipart/form-data">
                                                 @csrf
-
                                                 <div class="form-group row">
-                                                    <label class="col-lg-4 col-form-label" for="val-username"> Upload Screen Shot
+                                                    <label class="col-lg-4 col-form-label" for="val-username"> Total
+                                                        Fees in numbers
                                                         <span class="text-danger">*</span></label>
                                                     <div class="col-lg-8">
-                                                        <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
-                                                        <input type="file" class="form-control" id="val-username"
-                                                               name="image" required />
+                                                        <input type="number" class="form-control" id="val-username"
+                                                               name="fees" required/>
                                                     </div>
                                                 </div>
+
                                                 <div class="form-group row">
-                                                    <label class="col-lg-4 col-form-label" for="val-username"> Choose Date
+                                                    <label class="col-lg-4 col-form-label" for="val-username"> Upload
+                                                        Screen Shot
                                                         <span class="text-danger">*</span></label>
                                                     <div class="col-lg-8">
-                                                        <input type="date" class="form-control" id="val-username"
-                                                               name="month" required />
+                                                        <input type="hidden" name="user_id"
+                                                               value="{{ auth()->user()->id }}">
+                                                        <input type="file" class="form-control" id="val-username"
+                                                               name="image" required/>
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
@@ -100,15 +107,15 @@
             </div>
         </div>
 
-{{--        <script>--}}
-{{--            $(document).ready(function () {--}}
-{{--                $(function() {--}}
-{{--                    $( "#datepicker" ).datepicker({dateFormat: 'yy'});--}}
-{{--                });--}}
+    {{--        <script>--}}
+    {{--            $(document).ready(function () {--}}
+    {{--                $(function() {--}}
+    {{--                    $( "#datepicker" ).datepicker({dateFormat: 'yy'});--}}
+    {{--                });--}}
 
-{{--            });--}}
+    {{--            });--}}
 
-{{--        </script>--}}
+    {{--        </script>--}}
 
 @endsection
 

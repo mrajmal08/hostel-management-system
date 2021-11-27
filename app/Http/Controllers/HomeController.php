@@ -136,4 +136,9 @@ class HomeController extends Controller
         $bookings = BookHostel::all();
         return view('Student.manage-student', compact('bookings'));
     }
+
+    public function all_managers(){
+        $managers = User::where('role_id', 2)->orderBy('created_at', 'desc')->get();
+        return view('Admin.all-managers', compact('managers'));
+    }
 }
