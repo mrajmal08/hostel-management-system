@@ -87,6 +87,10 @@
 .card-body {
   padding: 0;
 }
+
+.paging_simple_numbers{
+    padding-left: 430px !important;
+}
 .card {
   background: #ffffff;
   margin: 7.5px 0;

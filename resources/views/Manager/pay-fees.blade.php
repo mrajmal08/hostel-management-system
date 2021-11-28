@@ -36,7 +36,18 @@
                         </div>
                         <!-- /# column -->
 
-                        @if ($errors->any())
+                        <?php
+                        $notification = \App\Models\StudentDue::where('user_id', auth()->user()->id)->pluck('notification')->first();
+
+                        ?>
+                        @if($notification)
+                            <div class="alert alert-danger">
+                                {{ $notification }}
+                            </div>
+                        @endif
+
+
+                    @if ($errors->any())
                             <div class="alert alert-danger">
                                 <ul>
                                     @foreach ($errors->all() as $error)

@@ -35,6 +35,7 @@
                         </div>
                         <!-- /# column -->
 
+
                         @if ($errors->any())
                             <div class="alert alert-danger">
                                 <ul>
@@ -51,7 +52,6 @@
                                 </ul>
                             </div>
                         @endif
-
 
                     </div>
                     <!-- /# row -->
@@ -82,6 +82,7 @@
                                                     $monthly_fees = $hostel->total_amount;
                                                     $room = \App\Models\Room::where('hostel_id', $hostel_id)->first();
                                                     $room_no = $room->room_no;
+
                                                     ?>
                                                     <tr>
                                                         <td>{{ $hostel_name }}</td>
@@ -97,6 +98,15 @@
                                                                class="btn btn-sm btn-warning ck waves-effect waves-light">
                                                                 edit
                                                             </a>
+                                                                @if($val->notification == null)
+                                                                <a data-toggle="modal" data-target="#g{{ $val->id }}"
+                                                                   class="btn btn-sm btn-danger ck waves-effect waves-light">
+                                                                    Send Reason
+                                                                </a>
+                                                                @else
+                                                                    <a href="{{ route('delete.notification', ['id' => $val->id]) }}" class="btn btn-sm btn-danger">remove notification</a>
+
+                                                                @endif
                                                             @endif
                                                         </td>
                                                     </tr>
@@ -144,6 +154,51 @@
                                                                         </button>
                                                                         <button type="submit"
                                                                                 class="btn btn-danger">Update
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                    <!-- END MODAL -->
+
+                                                    <!-- Modal Add Category -->
+                                                    <div class="modal fade none-border" id="g{{ $val->id }}">
+                                                        <div class="modal-dialog">
+                                                            <form method="POST" action="{{ route('send.notification') }}">
+                                                                @csrf
+
+                                                                <div class="modal-content">
+
+                                                                    <div class="modal-header">
+                                                                        <h4 class="modal-title">
+                                                                            <strong>Send any notification to this student</strong>
+                                                                        </h4>
+                                                                    </div>
+                                                                    <div class="modal-body">
+
+                                                                        <div class="row">
+                                                                            <div class="col-md-12">
+                                                                                <input type="hidden" name="user_id"
+                                                                                       value="{{ $val->id }}">
+
+                                                                                <label class="control-label">Send any notification to Student
+                                                                                </label>
+
+                                                                                <div class="">
+                                                                                    <input type="text" class="form-control" id="val-username"
+                                                                                           name="notification">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button"
+                                                                                class="btn btn-default waves-effect"
+                                                                                data-dismiss="modal">Close
+                                                                        </button>
+                                                                        <button type="submit"
+                                                                                class="btn btn-danger">Send Notification
                                                                         </button>
                                                                     </div>
                                                                 </div>

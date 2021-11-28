@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @push('custom-styles')
+
 @endpush
 
 @section('content')

@@ -32,6 +32,12 @@
     <link href="{{ asset('assets/css/lib/helper.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
 
+
+    {{--    <link href="{{ asset('assets/css/lib/data-table/buttons.bootstrap.min.css') }}" rel="stylesheet" />--}}
+    <link href="{{ asset('assets/css/lib/data-table/buttons.dataTables.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/lib/data-table/dataTables.bootstrap.min.css') }}" rel="stylesheet" />
+
+
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 
 
@@ -50,6 +56,7 @@
 <!-- nano scroller -->
 <script src="{{ asset('assets/js/lib/menubar/sidebar.js') }}"></script>
 <script src="{{ asset('assets/js/lib/preloader/pace.min.js') }}"></script>
+
 <!-- sidebar -->
 
 <script src="{{ asset('assets/js/lib/bootstrap.min.js') }}"></script>

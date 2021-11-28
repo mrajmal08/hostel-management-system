@@ -15,5 +15,6 @@ class StudentDue extends Model
         'date',
         'screen_shot',
         'status',
+        'notification',
     ];
 }

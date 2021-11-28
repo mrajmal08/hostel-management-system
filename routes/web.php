@@ -69,6 +69,8 @@ Route::get('pay-fees', [Web\RoomController::class, 'pay_fees'])->name('pay.fees'
 Route::post('fees-submit', [Web\RoomController::class, 'fees_submit'])->name('fees.submit');
 Route::get('fees-status', [Web\RoomController::class, 'fees_status'])->name('fees.status');
 Route::post('update-fees-status', [Web\RoomController::class, 'update_fees_status'])->name('update.fees_status');
+Route::post('send-notification', [Web\RoomController::class, 'send_notification'])->name('send.notification');
+Route::post('delete-notification/{id}', [Web\RoomController::class, 'delete_notification'])->name('delete.notification');
 
 //Courses Routes
 Route::get('/add-course', [Web\CourseController::class, 'index'])->name('add.course');

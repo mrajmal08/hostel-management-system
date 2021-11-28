@@ -228,4 +228,36 @@ class RoomController extends Controller
             return Redirect::back()->withErrors(['Something went wrong']);
         }
     }
+
+    public function send_notification(Request $request){
+        $this->validate($request, [
+            'notification' => 'required',
+        ]);
+        $result = StudentDue::where('id', $request->user_id)->update([
+            'notification' => $request->notification,
+        ]);
+        if ($result) {
+            return back()->with('success', 'Notification published to student successfully');
+        } else {
+            return Redirect::back()->withErrors(['Something went wrong']);
+        }
+
+    }
+
+    public function delete_notification($id){
+
+        $fees = StudentDue::find($id);
+        if ($fees) {
+            $result = StudentDue::where('id',$id )->update([
+                'notification' => '',
+            ]);
+            if ($result) {
+
+                return redirect()->back()->with('success', 'Notification Removed successfully');
+
+            } else {
+                return Redirect::back()->withErrors(['Something went wrong']);
+            }
+        }
+    }
 }
